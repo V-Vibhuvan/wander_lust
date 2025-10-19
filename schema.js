@@ -8,7 +8,9 @@ const listingSchema = Joi.object({
         country: Joi.string().required(),
         price: Joi.number().required().min(0),
         image: Joi.object({
-            // filename: Joi.string().default("listingimage"),
+            filename: Joi.string()
+                        .allow("") //allow empty
+                        .default("listingimage"),
             url: Joi.string()
                 .allow("") // allow empty string
                 .default("https://images.unsplash.com/photo-1758797849614-aea4f74fb056?q=80&w=685&auto=format&fit=crop")

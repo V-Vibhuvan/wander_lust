@@ -14,6 +14,7 @@
           alt="Listing Image"
         >
         <div class="card-body">
+          <p class="card-text">Owned By: <i><%= listing.owner.username%></i></p>
           <p class="card-text"><%= listing.description %></p>
           <p class="card-text"><strong>Price:</strong> &#8377;<%= listing.price.toLocaleString("en-IN") %></p>
           <p class="card-text"><strong>Location:</strong> <%= listing.location %></p>
@@ -22,18 +23,21 @@
       </div>
 
       <!-- Actions -->
-      <div class="mb-3 row-3">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2 col-3">Edit this Listing</a>
+       <% if(currUser && currUser._id.equals(listing.owner._id)) { %>
+        <div class="mb-3 row-3">
+          <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-2 col-3">Edit this Listing</a>
 
-        <form 
-          method="POST" 
-          action="/listings/<%= listing._id %>?_method=DELETE" 
-          class="d-inline"
-        >
-          <button type="submit" class="btn btn-danger col-3">Delete this Listing</button>
-        </form>
-      </div>
+          <form 
+            method="POST" 
+            action="/listings/<%= listing._id %>?_method=DELETE" 
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-danger col-3">Delete this Listing</button>
+          </form>
+        </div>
+      <% } %>
 
+      <% if(currUser)  {%>
       <div class="mb-4">
         <hr>
         <h4>Leave a Review</h4>
@@ -49,6 +53,7 @@
             </div>
             <button type="submit" class="btn btn-outline-dark">Submit</button>
         </form>
+        <% } %>
 
         <hr />
 
@@ -57,7 +62,7 @@
         <% for(review of listing.reviews) { %>
           <div class="card col-5 ms-3 mb-3">
             <div class="card-body">
-              <h5 class="card-title">Beems</h5>
+              <h5 class="card-title">@<%= review.author.username %></h5>
               <p class="card-text"><%=review.comment %></p>
               <p class="card-text"><%=review.rating %> &#9733;</p>
             </div>

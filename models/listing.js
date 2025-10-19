@@ -13,6 +13,7 @@ const listingSchema = new Schema({
         filename: {
             type: String,
             default: "listingimage",
+            set: (v) => (v === "" ? "listingimage" : v),
         },
         url: {
             type: String,
@@ -30,7 +31,11 @@ const listingSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Review"
         }
-    ]
+    ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }
 });
 
 listingSchema.post("findOneAndDelete", async(listing)=>{
