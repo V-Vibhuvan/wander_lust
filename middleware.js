@@ -2,6 +2,7 @@ const Listing = require("./models/listing");
 const Review = require("./models/review.js");
 const ExpressError = require("./utils/ExpressError.js");
 
+
 const {listingSchema} = require("./schema.js");
 const {reviewSchema} = require("./schema.js");
 
@@ -25,12 +26,25 @@ module.exports.isOwner = async (req,res,next) =>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
     //Server side authorization
-    if(currUser && !listing.owner._id.equals(currUser._id)){
+    if(!listing.owner._id.equals(res.locals.currUser._id)){
         req.flash("error", "You don't have permission to edit");
         return res.redirect(`/listings/${id}`);
     }
     next();
 }
+
+// module.exports.isOwner = async (req,res,next) =>{
+//     let {id} = req.params;
+//     let listing = await Listing.findById(id).populate("owner");
+
+//     // Use req.user from Passport
+//     if(!req.user || !listing.owner._id.equals(req.user._id)){
+//         req.flash("error", "You don't have permission to edit");
+//         return res.redirect(`/listings/${id}`);
+//     }
+//     next();
+// }
+
 
 module.exports.validateListing = (req,res,next)=>{
     let {error} = listingSchema.validate(req.body);

@@ -100,3 +100,10 @@ body{
     height: 30vh;
     
 }
+
+/* Map */
+#map { 
+    height: 350px;
+    width : 80vh;
+    margin-bottom: 1rem;
+}

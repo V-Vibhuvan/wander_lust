@@ -1,11 +1,11 @@
 <% layout("/layouts/boilerplate") -%>
 
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 offset-2">
-      <br><br>
-      <h1 class="mb-4">Edit Listing</h1>
-      <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="mb-4 text-center">Edit Listing</h1>
+
+      <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate enctype="multipart/form-data">
         
         <!-- Title -->
         <div class="mb-3">
@@ -32,33 +32,26 @@
           ><%= listing.description %></textarea>
         </div>
 
-        <!-- Image Filename -->
+        <!-- Current Image -->
         <div class="mb-3">
-          <label for="image-filename" class="form-label">Image Filename</label>
+          <label class="form-label d-block">Current Image</label>
+          <img src="<%= listing.image.url %>" class="img-fluid rounded" alt="Listing Image" style="max-height: 250px;" />
+        </div>
+
+        <!-- Upload New Image -->
+        <div class="mb-3">
+          <label for="image-filename" class="form-label">Upload New Image</label>
           <input 
-            name="listing[image][filename]" 
+            name="image" 
             id="image-filename"
             class="form-control" 
-            type="text" 
-            value="<%= listing.image.filename %>"
+            type="file" 
+            accept="image/*"
           />
         </div>
 
-        <!-- Image URL -->
-        <div class="mb-3">
-          <label for="image-url" class="form-label">Image URL / Link</label>
-          <input 
-            name="listing[image][url]" 
-            id="image-url"
-            class="form-control" 
-            type="text" 
-            required
-            value="<%= listing.image.url %>"
-          />
-        </div>
-
+        <!-- Price and Country -->
         <div class="row">
-          <!-- Price -->
           <div class="mb-3 col-md-4">
             <label for="price" class="form-label">Price</label>
             <input 
@@ -71,7 +64,6 @@
             />
           </div>
 
-          <!-- Country -->
           <div class="mb-3 col-md-8">
             <label for="country" class="form-label">Country</label>
             <input 
@@ -98,10 +90,10 @@
           />
         </div>
 
-        <br><br>
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-dark add-btn">Update Listing</button>
-        <br><br>
+        <div class="text-center">
+          <button type="submit" class="btn btn-dark add-btn">Update Listing</button>
+        </div>
       </form>
     </div>
   </div>
